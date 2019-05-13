@@ -1,7 +1,10 @@
 package com.example.hd.joyconpadfornsw;
 
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import java.io.DataInputStream;
@@ -9,91 +12,221 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import android.os.Handler;
+import java.net.UnknownHostException;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import android.os.Handler;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String IP = "192.168.0.1";
+    private static String IP = "192.168.0.13";
 
-    private static final int PORT = 5000;
-    private Socket socket;
+    private static final int PORT = 5672;
+    private Socket clientSocket;
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
     private Handler handler;
     private String writeMsg, readMsg;
 
-    @BindView(R.id.button_up)
-    Button btnUp;
-    @BindView(R.id.button_down)
-    Button btnDown;
-    @BindView(R.id.button_left)
-    Button btnLeft;
-    @BindView(R.id.button_right)
-    Button btnRight;
-    @BindView(R.id.button_a)
-    Button btnA;
-    @BindView(R.id.button_b)
-    Button btnB;
-    @BindView(R.id.button_x)
-    Button btnX;
-    @BindView(R.id.button_y)
-    Button btnY;
-    @BindView(R.id.button_sl)
-    Button btnSl;
-    @BindView(R.id.button_sr)
-    Button btnSr;
-    @BindView(R.id.button_z)
-    Button btnZ;
-    @BindView(R.id.button_zl)
-    Button btnZl;
-    @BindView(R.id.button_connect)
-    Button btnConnect;
+    private Button btnUp;
+    private Button btnDown;
+    private Button btnLeft;
+    private Button btnRight;
+    private Button btnA;
+    private Button btnB;
+    private Button btnX;
+    private Button btnY;
+    private Button btnSl;
+    private Button btnSr;
+    private Button btnZ;
+    private Button btnZl;
+    private Button btnConnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ButterKnife.bind(this);
+        handler = new Handler();
+
+        btnUp = (Button) findViewById(R.id.button_up);
+        btnDown = (Button) findViewById(R.id.button_down);
+        btnLeft = (Button) findViewById(R.id.button_left);
+        btnRight = (Button) findViewById(R.id.button_right);
+        btnA = (Button) findViewById(R.id.button_a);
+        btnB = (Button) findViewById(R.id.button_b);
+        btnX = (Button) findViewById(R.id.button_x);
+        btnY = (Button) findViewById(R.id.button_y);
+        btnSl = (Button) findViewById(R.id.button_sl);
+        btnSr = (Button) findViewById(R.id.button_sr);
+        btnZ = (Button) findViewById(R.id.button_z);
+        btnZl = (Button) findViewById(R.id.button_zl);
+        btnConnect = (Button) findViewById(R.id.button_connect);
+        btnConnect.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                connectClickEvent(v);
+            }
+        });
+
+        btnUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("U"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("D"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("L"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("R"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("A"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("B"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("X"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("Y"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnSl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("Sl"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnSr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("Sr"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnZ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("Z"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnZl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                try {
+                    outputStream.writeUTF(new String("Zl"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    @OnClick({R.id.button_connect})
-    void connectClickEvent(Button button) {
+    protected void onStop() {
+        super.onStop();
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void connectClickEvent(View v) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    socket = new Socket(InetAddress.getByName(IP), PORT);
-                    inputStream = new DataInputStream(socket.getInputStream());
-                    outputStream = new DataOutputStream(socket.getOutputStream());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    clientSocket = new Socket(InetAddress.getByName(IP), PORT);
+                    Log.d("ClientLog", "Connected");
+                    inputStream = new DataInputStream(clientSocket.getInputStream());
+                    outputStream = new DataOutputStream(clientSocket.getOutputStream());
 
-                while (true) {
-                    try {
-                        readMsg = inputStream.readUTF();
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                            }
-                        });
+                    outputStream.writeUTF("JoyconPad");
+                    while (inputStream != null) {
+                        try {
+                            readMsg = inputStream.readUTF();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        handler.sendEmptyMessage(1);
+                    }
+                    } catch (UnknownHostException e) {
+                        e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-            }
-        }).start();
+            }).start();
+        }
+
     }
 
-    @OnClick({R.id.button_up, R.id.button_down, R.id.button_left, R.id.button_right, R.id.button_a, R.id.button_b, R.id.button_x, R.id.button_y, R.id.button_sl,
-            R.id.button_sr, R.id.button_z, R.id.button_zl})
-    void onClickEvent(Button button) {
-        String str = button.getText().toString();
-    }
-
-}
