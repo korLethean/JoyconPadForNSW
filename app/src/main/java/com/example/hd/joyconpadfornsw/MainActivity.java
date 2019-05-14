@@ -1,6 +1,8 @@
 package com.example.hd.joyconpadfornsw;
 
+import android.content.Context;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
     private Handler handler;
-    private String writeMsg, readMsg;
+    private String writeMsg, getFeedback;
+    private Vibrator fb;
 
     private Button btnUp;
     private Button btnDown;
@@ -39,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnSl;
     private Button btnSr;
     private Button btnZ;
-    private Button btnZl;
     private Button btnConnect;
 
     @Override
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         handler = new Handler();
+        fb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         btnUp = (Button) findViewById(R.id.button_up);
         btnDown = (Button) findViewById(R.id.button_down);
@@ -60,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         btnSl = (Button) findViewById(R.id.button_sl);
         btnSr = (Button) findViewById(R.id.button_sr);
         btnZ = (Button) findViewById(R.id.button_z);
-        btnZl = (Button) findViewById(R.id.button_zl);
         btnConnect = (Button) findViewById(R.id.button_connect);
         btnConnect.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -179,16 +181,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        btnZl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                try {
-                    outputStream.writeUTF(new String("Zl"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     protected void onStop() {
@@ -213,7 +205,8 @@ public class MainActivity extends AppCompatActivity {
                     outputStream.writeUTF("JoyconPad");
                     while (inputStream != null) {
                         try {
-                            readMsg = inputStream.readUTF();
+                            getFeedback = inputStream.readUTF();
+                            feedback();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -228,5 +221,18 @@ public class MainActivity extends AppCompatActivity {
             }).start();
         }
 
-    }
+        private void feedback() {
+            switch(getFeedback) {
+                case "U": {
+                    fb.vibrate(400);
+                }
+                break;
+                case "D": {
+                    long[] pattern = {200, 50, 200, 50};
+                    fb.vibrate(pattern, -1);
+                }
+            }
+        }
+
+}
 
