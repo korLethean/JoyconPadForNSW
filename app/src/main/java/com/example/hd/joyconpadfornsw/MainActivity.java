@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import android.os.Handler;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler;
     private String writeMsg, getFeedback;
     private Vibrator fb;
+
+    private EditText IPEdit;
 
     private Button btnUp;
     private Button btnDown;
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler();
         fb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        IPEdit = (EditText) findViewById(R.id.ipEdit);
 
         btnUp = (Button) findViewById(R.id.button_up);
         btnDown = (Button) findViewById(R.id.button_down);
@@ -193,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void connectClickEvent(View v) {
+        IP = IPEdit.getText().toString();
+        Log.d("ClientLog", IP);
         new Thread(new Runnable() {
             @Override
             public void run() {

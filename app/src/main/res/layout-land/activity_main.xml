@@ -97,8 +97,8 @@
         android:id="@+id/button_b"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
         android:layout_marginStart="40dp"
+        android:layout_marginEnd="72dp"
         android:text="B"
         app:layout_constraintEnd_toStartOf="@+id/button_z"
         app:layout_constraintStart_toEndOf="@+id/button_connect"
@@ -145,10 +145,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="43dp"
-        android:layout_marginBottom="6dp"
         android:text="Connect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_b"
         app:layout_constraintStart_toEndOf="@+id/button_down" />
+
+    <EditText
+        android:id="@+id/ipEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="6dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Target IP"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_connect" />
 
 </android.support.constraint.ConstraintLayout>
