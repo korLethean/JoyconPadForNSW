@@ -32,10 +32,10 @@
         android:layout_marginStart="55dp"
         android:layout_marginEnd="80dp"
         android:text="L"
-        app:layout_constraintBottom_toBottomOf="@+id/button_x"
+        app:layout_constraintBottom_toBottomOf="@+id/button_y"
         app:layout_constraintEnd_toEndOf="@+id/button_down"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_x" />
+        app:layout_constraintTop_toTopOf="@+id/button_y" />
 
     <Button
         android:id="@+id/button_right"
@@ -71,15 +71,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_y"
+        android:id="@+id/button_x"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="105dp"
         android:layout_marginBottom="104dp"
-        android:text="Y"
+        android:text="X"
         app:layout_constraintBottom_toTopOf="@+id/button_connect"
         app:layout_constraintEnd_toEndOf="@+id/button_b"
-        app:layout_constraintStart_toEndOf="@+id/button_x"
+        app:layout_constraintStart_toEndOf="@+id/button_y"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -90,8 +90,8 @@
         android:layout_marginEnd="121dp"
         android:text="A"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/button_x"
-        app:layout_constraintTop_toBottomOf="@+id/button_y" />
+        app:layout_constraintStart_toStartOf="@+id/button_y"
+        app:layout_constraintTop_toBottomOf="@+id/button_x" />
 
     <Button
         android:id="@+id/button_b"
@@ -102,18 +102,18 @@
         android:text="B"
         app:layout_constraintEnd_toStartOf="@+id/button_z"
         app:layout_constraintStart_toEndOf="@+id/button_connect"
-        app:layout_constraintTop_toBottomOf="@+id/button_x" />
+        app:layout_constraintTop_toBottomOf="@+id/button_y" />
 
     <Button
-        android:id="@+id/button_x"
+        android:id="@+id/button_y"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginEnd="72dp"
-        android:text="X"
+        android:text="Y"
         app:layout_constraintEnd_toEndOf="@+id/button_sr"
         app:layout_constraintStart_toStartOf="@+id/button_connect"
-        app:layout_constraintTop_toBottomOf="@+id/button_y" />
+        app:layout_constraintTop_toBottomOf="@+id/button_x" />
 
     <Button
         android:id="@+id/button_z"
